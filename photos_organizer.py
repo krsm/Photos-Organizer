@@ -202,7 +202,7 @@ def get_files_dir():
 def main():
 
     folder_dir = get_files_dir()
-    gethashfileslist(curDir)
+    gethashfileslist(folder_dir)
     print("--------------------Starting getting files info--------------------")
     call_file_list = get_infodir(folder_dir)  # getting info regarding files
     print("-------------------- Moving files --------------------")
