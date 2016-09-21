@@ -57,7 +57,7 @@ def return_month(montharg):
 # dir is not keyword
 def makemydir(filedir, foldername):
     ckdir = os.path.join(filedir, foldername)
-    print(ckdir)
+    #print(ckdir)
     try:
         os.makedirs(ckdir, exist_ok=True)
     except OSError as exception:
