@@ -148,7 +148,12 @@ def gethashfileslist(filedir):
         pathfile = os.path.join(filedir, file)  # join the dir and filename
         checkfile = False
         checkfile = os.path.isfile(os.path.join(filedir, file))  # check if is a file, and do not count folders, etcs
-        if not file.endswith(".py") and checkfile == True:  # .py to remove the python files in the dir
+
+        # verify file extension
+        ck_file_extension = False
+        ck_file_extension = check_file_extension(file)
+
+        if ck_file_extension and checkfile == True:
             hashcalc = hashfile(pathfile)
             counter = 1
             # create dict with hash of files and number of same hashes
@@ -168,7 +173,12 @@ def gethashfileslist(filedir):
         pathfolder1 = os.path.join(filedir, Folder1)  # join the dir and filename - dir of duplicated files
         checkfile = False
         checkfile = os.path.isfile(os.path.join(filedir, file))  # check if is a file, and do not count folders, etcs
-        if not file.endswith(".py") and checkfile == True:  # .py to remove the python files in the dir
+
+        # verify file extension
+        ck_file_extension = False
+        ck_file_extension = check_file_extension(file)
+
+        if ck_file_extension and checkfile == True:
             hashcalc = hashfile(pathfile)
             hashcounter = 0
             hashcounter = dup_hash[hashcalc]
@@ -216,4 +226,5 @@ def main():
 
 
 if __name__ == '__main__':
+    print(curDir)
     main()
