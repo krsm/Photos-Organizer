@@ -5,13 +5,12 @@ import shutil
 import time
 
 """
-1 - Open a directory
-2 - Create folders # checked and duplicates
-3 - Make comparison about files ( use extension and size, hash as parameter to see if is applicable to do a comparison)
-4 - If the size is the same to the comparison
-5 - If there is duplicate file move to duplicate folder - rename the file with the duplicate name, otherwise move
-file to checked folder
-6 - In the checked folder verify date and a group per month and year
+Script will:
+1 - Open a directory - Path provided by user.
+2 - Get a hash list of all files with the allowed extension
+3 - Make comparison about files ( use extension hash as parameter to see if is applicable to do a comparison)
+4 - If there is duplicate file move to duplicate folder - "01 - Duplicated"
+5 - Create a folder for each group of dates - Files will be organized by folders containing the date of their creation,date and a group per month and year
 
 """
 
@@ -180,7 +179,7 @@ def gethashfileslist(filedir):
                 dup_hash[hashcalc] = hashcounter - 1
 
 
-# function to get path to dir that contains pictures
+# function to get path to dir that contains photos/image file
 def get_files_dir():
     print("#-------------------------------------------------- \n"
           "Script to organize pictures \n"
