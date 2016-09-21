@@ -15,17 +15,26 @@ file to checked folder
 
 """
 
-# get the folder in each the file is stored
-curDir = os.getcwd()
+# get the path of py file - photos organizer
+curDir = os.getcwd()  # used for debugging purposes
 
 # variable - name folder to be created with duplicated files
 Folder1 = "01 - Duplicated"
 
-ALLOWED_EXTENSIONS = [ 'png', 'jpg', 'jpeg', 'gif'] # to define what type of file will be organized
+# allowed extensions that will be verified
+ALLOWED_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif']  # to define what type of file will be organized
+
+
+# verify if the file extension belongs to the allowed extensions
+def check_file_extension(file):
+    for file_extension in ALLOWED_EXTENSIONS:
+
+        if file.endswith(file_extension):
+            return True
+
 
 # function to return the month based on the number
-def returnmonth(montharg):
-
+def return_month(montharg):
     switcher = {
         1: "01_JAN",
         2: "02_FEB",
@@ -44,15 +53,6 @@ def returnmonth(montharg):
     return switcher.get(montharg, "nothinhg")
 
 
-# function to get an unique entry to list of elements
-def getuniqueentry(listcheck):
-    checked = []
-    for k in listcheck:
-        if k not in checked:
-            checked.append(k)
-    return checked
-
-
 # create folders
 # dir is not keyword
 def makemydir(filedir, foldername):
@@ -63,7 +63,6 @@ def makemydir(filedir, foldername):
     except OSError as exception:
         if exception.errno != errno.EEXIST:
             raise
-
 
 
 # move files to specific folder, based on the date file was created
@@ -77,14 +76,19 @@ def move_files(filesdir, listofdates):
 
         for file in os.listdir(filesdir):
             a = os.stat(os.path.join(filesdir, file))
-            ckfile = False  # variable to assure it is not a folder, dir, etc
-            ckfile = os.path.isfile(os.path.join(filesdir, file))  # check if is a file, and do not count folders, etcs.
+            checkfile = False  # variable to assure it is not a folder, dir, etc
+            checkfile = os.path.isfile(
+                os.path.join(filesdir, file))  # check if is a file, and do not count folders, etcs.
 
-            if not file.endswith(".py") and ckfile == True:  # .py to remove the python files,folder and dirs.
+            # verify file extension
+            ck_file_extension = False
+            ck_file_extension = check_file_extension(file)
+
+            if ck_file_extension and checkfile == True:
                 datefile = time.localtime(a.st_mtime)
-                print(datefile)
+                # print(datefile)
                 getmonthfile = datefile.tm_mon
-                getmonthfile = returnmonth(getmonthfile)
+                getmonthfile = return_month(getmonthfile)
                 getmonthfile = str(getmonthfile)  # convert to string
                 getyearfile = datefile.tm_year
                 getyearfile = str(getyearfile)  # convert to string
@@ -101,11 +105,15 @@ def get_infodir(filedir):
         a = os.stat(os.path.join(filedir, file))
         checkfile = False
         checkfile = os.path.isfile(os.path.join(filedir, file))  # check if is a file, and do not count folders, etcs.
-        if not file.endswith(".py") and checkfile == True:  # .py to remove the python files in the dir
 
+        # verify file extension
+        ck_file_extension = False
+        ck_file_extension = check_file_extension(file)
+
+        if ck_file_extension and checkfile == True:
             datefile = time.localtime(a.st_mtime)
             getmonth = datefile.tm_mon
-            getmonth = returnmonth(getmonth)
+            getmonth = return_month(getmonth)
             getyear = datefile.tm_year
             getmonth = str(getmonth)
             getyear = str(getyear)
@@ -152,7 +160,7 @@ def gethashfileslist(filedir):
                 counter = counter + 1
                 dup_hash[hashcalc] = counter
 
-    #print(dup_hash)
+    # print(dup_hash)
     # create folder for duplicated files
     makemydir(curDir, Folder1)
 
@@ -200,7 +208,6 @@ def get_files_dir():
 
 
 def main():
-
     folder_dir = get_files_dir()
     gethashfileslist(folder_dir)
     print("--------------------Starting getting files info--------------------")
@@ -211,5 +218,4 @@ def main():
 
 
 if __name__ == '__main__':
-
     main()
