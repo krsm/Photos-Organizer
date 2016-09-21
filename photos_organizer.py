@@ -10,7 +10,8 @@ Script will:
 2 - Get a hash list of all files with the allowed extension
 3 - Make comparison about files ( use extension hash as parameter to see if is applicable to do a comparison)
 4 - If there is duplicate file move to duplicate folder - "01 - Duplicated"
-5 - Create a folder for each group of dates - Files will be organized by folders containing the date of their creation,date and a group per month and year
+5 - Create a folder for each group of dates - Files will be organized by folders containing the date of their creation,
+date and a group per month and year
 
 """
 
@@ -27,7 +28,6 @@ ALLOWED_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif']  # to define what type of
 # verify if the file extension belongs to the allowed extensions
 def check_file_extension(file):
     for file_extension in ALLOWED_EXTENSIONS:
-
         if file.endswith(file_extension):
             return True
 
@@ -56,7 +56,6 @@ def return_month(montharg):
 # dir is not keyword
 def makemydir(filedir, foldername):
     ckdir = os.path.join(filedir, foldername)
-    #print(ckdir)
     try:
         os.makedirs(ckdir, exist_ok=True)
     except OSError as exception:
@@ -67,7 +66,6 @@ def makemydir(filedir, foldername):
 # move files to specific folder, based on the date file was created
 def move_files(filesdir, listofdates):
     for item in listofdates:
-
         makemydir(filesdir, item)  # create folders
         itemdate = item.split()
         getyearfolder = itemdate[0]
@@ -91,7 +89,9 @@ def move_files(filesdir, listofdates):
                 getmonthfile = str(getmonthfile)  # convert to string
                 getyearfile = datefile.tm_year
                 getyearfile = str(getyearfile)  # convert to string
+
                 if (getyearfolder == getyearfile):
+
                     if (getmonthfolder == getmonthfile):
                         shutil.move(file, os.path.join(filesdir,
                                                        item))  # move files if their year and month of creation is compatible with the folder
@@ -159,7 +159,6 @@ def gethashfileslist(filedir):
                 counter = counter + 1
                 dup_hash[hashcalc] = counter
 
-    # print(dup_hash)
     # create folder for duplicated files
     makemydir(curDir, Folder1)
 
