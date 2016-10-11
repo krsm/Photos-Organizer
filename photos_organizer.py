@@ -49,7 +49,7 @@ def return_month(montharg):
         12: "12_DEC",
 
     }
-    return switcher.get(montharg, "nothinhg")
+    return switcher.get(montharg, "None")
 
 
 # create folders
@@ -74,8 +74,7 @@ def move_files(filesdir, listofdates):
         for file in os.listdir(filesdir):
             a = os.stat(os.path.join(filesdir, file))
             checkfile = False  # variable to assure it is not a folder, dir, etc
-            checkfile = os.path.isfile(
-                os.path.join(filesdir, file))  # check if is a file, and do not count folders, etcs.
+            checkfile = os.path.isfile(os.path.join(filesdir, file))  # check if is a file, and do not count folders, etcs.
 
             # verify file extension
             ck_file_extension = False
@@ -93,8 +92,7 @@ def move_files(filesdir, listofdates):
                 if (getyearfolder == getyearfile):
 
                     if (getmonthfolder == getmonthfile):
-                        shutil.move(file, os.path.join(filesdir,
-                                                       item))  # move files if their year and month of creation is compatible with the folder
+                        shutil.move(os.path.join(filesdir,file), os.path.join(filesdir,item))  # move files if their year and month of creation is compatible with the folder
 
 
 # get info about files.
@@ -165,7 +163,7 @@ def gethashfileslist(filedir):
                 dup_hash[hashcalc] = counter
 
     # create folder for duplicated files
-    makemydir(curDir, Folder1)
+    makemydir(filedir, Folder1)
 
     for file in os.listdir(filedir):
         # a = os.stat(os.path.join(filedir,file))#join the dir and filename
@@ -184,7 +182,10 @@ def gethashfileslist(filedir):
             hashcounter = dup_hash[hashcalc]
 
             if hashcounter > 1:
-                shutil.move(file, pathfolder1)
+                #os.path.join(filesdir,file)
+                path = os.path.join(file,pathfolder1)
+                print(pathfolder1)
+                shutil.move(pathfile, pathfolder1)
                 dup_hash[hashcalc] = hashcounter - 1
 
 
